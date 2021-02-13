@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'landbot',
+    'rest_framework',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Email provider
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '4bb6cdc8491735'
+EMAIL_HOST_PASSWORD = 'cf908fa82163b1'
+EMAIL_PORT = '2525'
