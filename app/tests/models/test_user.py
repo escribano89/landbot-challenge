@@ -1,11 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
+
 class UserTest(TestCase):
 
-    def test_create_user(self):
-        """Test creating a new user (in order to setup the environment)"""
-
+    def test_given_extended_user_when_create_then_returns_user(self):
         username = 'test'
         email = 'test@test.test'
 
