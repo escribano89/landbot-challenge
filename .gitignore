@@ -122,3 +122,23 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# DRF 
+*.pyc
+*.db
+*~
+.*
+
+/site/
+/htmlcov/
+/coverage/
+/build/
+/dist/
+/*.egg-info/
+/env/
+MANIFEST
+coverage.*
+
+!.gitignore
+!.travis.yml
+!.isort.cfg
