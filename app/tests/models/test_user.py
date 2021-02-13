@@ -6,7 +6,7 @@ class UserTest(TestCase):
     def test_create_user(self):
         """Test creating a new user (in order to setup the environment)"""
 
-        username = 'test'
+        username = None
         email = 'test@test.test'
 
         user = User.objects.create(
