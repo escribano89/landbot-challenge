@@ -1,9 +1,9 @@
+# Got from: https://www.mlr2d.org/modules/djangorestapi/09_command_to_wait_for_db
 from django.core.management.base import BaseCommand
 from django.db import connections
 from django.db.utils import OperationalError
 import time
 
-# Got from: https://www.mlr2d.org/modules/djangorestapi/09_command_to_wait_for_db
 
 class Command(BaseCommand):
     """ Django command to pause execution until database is available"""
