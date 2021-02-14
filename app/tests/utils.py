@@ -18,6 +18,7 @@ def create_and_validate_custom_user(
         user.clean_fields()
         return user
 
+
 def create_and_validate_custom_notification(
     notification='welcome_message', strategy='email', user=None
 ):

@@ -1,6 +1,6 @@
 from django.test import TestCase
 from tests.utils import (
-    create_and_validate_custom_user, 
+    create_and_validate_custom_user,
     create_and_validate_custom_notification
 )
 from django.db.utils import IntegrityError
