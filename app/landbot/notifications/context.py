@@ -2,6 +2,7 @@ from importlib import import_module
 
 STRATEGIES_MODULE = 'landbot.notifications.strategies'
 
+
 class NotificationContext():
     """
     The Context defines the interface of interest to clients
@@ -16,11 +17,11 @@ class NotificationContext():
         # provided notification
         strategies_available = import_module('landbot.notifications.{}'.format(notification.lower()))
         strategies_dict = getattr(strategies_available, 'STRATEGIES')
-        
+
         # We get the selected strategy class
         module = import_module('{}.{}'.format(STRATEGIES_MODULE, strategy))
         strategy_ = getattr(module, strategy.capitalize())
-    
+
         self.strategy = strategy_(strategies_dict.get(strategy))
 
     def send(self, user_unique_key) -> None:
