@@ -16,4 +16,4 @@ jobs:
       run: docker-compose build
 
     - name: Run tests
-      run: docker-compose run web sh -c "python manage.py test"
+      run: docker-compose run web sh -c "python manage.py test && flake8"
