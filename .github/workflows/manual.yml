@@ -15,8 +15,5 @@ jobs:
     - name: Build docker images
       run: docker-compose build
     
-    - name: Wait postgres
-      run: sh -c 'while !</dev/tcp/db/5432; do sleep 1;done;'
-      
     - name: Run tests
-      run: docker-compose run web sh -c 'while !</dev/tcp/db/5432; do sleep 1;done;python manage.py test && flake8'
+      run: docker-compose run web sh -c 'python manage.py test && flake8'
