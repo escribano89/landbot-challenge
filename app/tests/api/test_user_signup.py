@@ -4,8 +4,6 @@ from rest_framework.test import APIClient
 from landbot.models import ExtendedUser
 from django.urls import reverse
 from unittest import mock
-from django.db.models import signals
-from factory.django import mute_signals
 
 SIGNUP_URL = reverse('create-user')
 
@@ -13,7 +11,6 @@ SIGNUP_URL = reverse('create-user')
 class ApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()
- 
 
     def send_post(self, url, first_name='Javier', email='test@test.test', phone='+41524204242', origin='landbot'):
         return self.client.post(
@@ -47,11 +44,11 @@ class ApiTests(TestCase):
     def test_given_user_when_signup_with_empty_first_name_then_bad_request(self):
         res = self.send_post(SIGNUP_URL, first_name='')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-    
+
     def test_given_user_when_signup_with_empty_email_then_bad_request(self):
         res = self.send_post(SIGNUP_URL, email='')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-    
+
     def test_given_user_when_signup_with_empty_origin_then_bad_request(self):
         res = self.send_post(SIGNUP_URL, origin='')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
@@ -76,8 +73,8 @@ class ApiTests(TestCase):
         )
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-    
-    def test_given_user_when_signup_post_without_origin_then_bad_request(self):        
+
+    def test_given_user_when_signup_post_without_origin_then_bad_request(self):
         first_name = 'Javier'
         email = 'test@test.test'
         phone = '+41524204242'
@@ -93,7 +90,7 @@ class ApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_user_when_signup_post_without_phone_then_bad_request(self):        
+    def test_given_user_when_signup_post_without_phone_then_bad_request(self):
         first_name = 'Javier'
         email = 'test@test.test'
         origin = 'landbot'
@@ -109,7 +106,7 @@ class ApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_user_when_signup_post_without_email_then_bad_request(self):        
+    def test_given_user_when_signup_post_without_email_then_bad_request(self):
         first_name = 'Javier'
         phone = '+41524204242'
         origin = 'landbot'
@@ -125,7 +122,7 @@ class ApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_user_when_signup_twice_then_ok_and_bad(self):        
+    def test_given_user_when_signup_twice_then_ok_and_bad(self):
         with mock.patch('landbot.models.extended_user.async_notification', return_value=True) as mocked_handler:
             first_name = 'Javier'
             phone = '+41524204242'
