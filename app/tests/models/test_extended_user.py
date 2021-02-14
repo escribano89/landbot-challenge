@@ -2,6 +2,8 @@ from django.test import TestCase
 from tests.utils import create_and_validate_custom_user
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
+from landbot.models import ExtendedUser
+from unittest import mock
 
 
 class UserExtendedTest(TestCase):

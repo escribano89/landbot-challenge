@@ -134,3 +134,12 @@ EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = '4bb6cdc8491735'
 EMAIL_HOST_PASSWORD = 'cf908fa82163b1'
 EMAIL_PORT = '2525'
+EMAIL_FROM = 'escribano101@gmail.com'
+
+# Celery settings
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_IMPORTS = ("landbot.tasks.signup")
