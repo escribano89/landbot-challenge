@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'landbot',
+    'landbot.apps.LandbotConfig',
     'rest_framework',
     'phonenumber_field',
 ]
