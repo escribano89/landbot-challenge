@@ -24,5 +24,5 @@ class NotificationContext():
 
         self.strategy = strategy_(strategies_dict.get(strategy))
 
-    def send(self, user_unique_key) -> None:
-        self.strategy.send(user_unique_key)
+    def send(self, to) -> None:
+        self.strategy.send(to)
