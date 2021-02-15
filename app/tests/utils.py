@@ -1,12 +1,13 @@
-from landbot.models import ExtendedUser
-from landbot.models import Notification
+import factory
+from landbot.models import ExtendedUser, Notification
 from unittest import mock
+from django.db.models import signals
 
 
+@factory.django.mute_signals(signals.post_save)
 def create_and_validate_custom_user(
     first_name='Javier', email='test@test.test', phone='+41524204242', origin='landbot'
 ):
-    with mock.patch('landbot.models.extended_user.async_notification', return_value=''):
         user = ExtendedUser.objects.create(
             email=email,
             first_name=first_name,
