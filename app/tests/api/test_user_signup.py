@@ -34,7 +34,7 @@ class ApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
         # Assert that notification db row has been updated properly
-        notification = Notification.objects.get(customer_email=user.email)
+        notification = Notification.objects.get(user=user)
         self.assertEquals(notification.sent, True)
 
     def test_given_user_when_signup_with_wrong_email_then_bad_request(self):

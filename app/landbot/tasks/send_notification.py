@@ -7,8 +7,8 @@ from landbot.models import Notification
 def send_notification(notification_id):
     notification = Notification.objects.get(id=notification_id)
     # Use the context to setup the strategy
-    # and then send the email
-    context = NotificationContext(notification.strategy, notification.notification)
-    context.strategy.send(notification.customer_email)
+    # and then send the notification
+    context = NotificationContext(notification.user, notification.notification)
+    context.strategy.send()
     # Update the sent flag
     Notification.objects.filter(id=notification_id).update(sent=True)

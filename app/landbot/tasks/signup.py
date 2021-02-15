@@ -1,10 +1,9 @@
 from landbot.models import Notification
 
 
-def signup_notification(strategy, notification, customer_email):
+def signup_notification(user, notification):
     # Create the notification in order to trigger the related signal
     Notification.objects.create(
-        strategy=strategy,
         notification=notification,
-        customer_email=customer_email
+        user=user
     )
