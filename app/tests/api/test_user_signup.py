@@ -1,9 +1,9 @@
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
-from landbot.models import ExtendedUser
+from landbot.models import ExtendedUser, Notification
 from django.urls import reverse
-from unittest import mock
+from django.test.utils import override_settings
 
 SIGNUP_URL = reverse('create-user')
 
@@ -23,15 +23,19 @@ class ApiTests(TestCase):
             },
         )
 
+    @override_settings(CELERY_TASK_EAGER_PROPAGATES=True,
+                       CELERY_TASK_ALWAYS_EAGER=True,
+                       BROKER_BACKEND='memory')
     def test_given_user_when_signup_post_then_created_ok(self):
-        with mock.patch('landbot.models.extended_user.async_notification', return_value=True) as mocked_handler:
-            res = self.send_post(SIGNUP_URL)
+        res = self.send_post(SIGNUP_URL)
+        user = ExtendedUser.objects.get(email='test@test.test')
 
-            user = ExtendedUser.objects.get(email='test@test.test')
+        self.assertTrue(isinstance(user, ExtendedUser))
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
-            self.assertTrue(isinstance(user, ExtendedUser))
-            self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-            self.assertEquals(mocked_handler.call_count, 1)
+        # Assert that notification db row has been updated properly
+        notification = Notification.objects.get(customer_email=user.email)
+        self.assertEquals(notification.sent, True)
 
     def test_given_user_when_signup_with_wrong_email_then_bad_request(self):
         res = self.send_post(SIGNUP_URL, email='42')
@@ -122,36 +126,37 @@ class ApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
+    @override_settings(CELERY_TASK_EAGER_PROPAGATES=True,
+                       CELERY_TASK_ALWAYS_EAGER=True,
+                       BROKER_BACKEND='memory')
     def test_given_user_when_signup_twice_then_ok_and_bad(self):
-        with mock.patch('landbot.models.extended_user.async_notification', return_value=True) as mocked_handler:
-            first_name = 'Javier'
-            phone = '+41524204242'
-            origin = 'landbot'
-            email = 'test_twice@test.test'
+        first_name = 'Javier'
+        phone = '+41524204242'
+        origin = 'landbot'
+        email = 'test_twice@test.test'
 
-            res = self.client.post(
-                SIGNUP_URL,
-                {
-                    'phone': phone,
-                    'first_name': first_name,
-                    'origin': origin,
-                    'email': email
-                },
-            )
+        res = self.client.post(
+            SIGNUP_URL,
+            {
+                'phone': phone,
+                'first_name': first_name,
+                'origin': origin,
+                'email': email
+            },
+        )
 
-            user = ExtendedUser.objects.get(email=email)
-            self.assertTrue(isinstance(user, ExtendedUser))
-            self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-            self.assertEquals(mocked_handler.call_count, 1)
+        user = ExtendedUser.objects.get(email=email)
+        self.assertTrue(isinstance(user, ExtendedUser))
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
-            res = self.client.post(
-                SIGNUP_URL,
-                {
-                    'phone': phone,
-                    'first_name': first_name,
-                    'origin': origin,
-                    'email': email
-                },
-            )
+        res = self.client.post(
+            SIGNUP_URL,
+            {
+                'phone': phone,
+                'first_name': first_name,
+                'origin': origin,
+                'email': email
+            },
+        )
 
-            self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)

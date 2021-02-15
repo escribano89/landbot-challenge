@@ -1,13 +1,10 @@
-from celery import shared_task
-from django.core.mail import send_mail
+from landbot.models import Notification
 
 
-@shared_task
-def signup_notification(email):
-    send_mail(
-        'Landbot Subject here',
-        'Here is the message.',
-        'from@example.com',
-        [email],
-        fail_silently=False,
+def signup_notification(strategy, notification, customer_email):
+    # Create the notification in order to trigger the related signal
+    Notification.objects.create(
+        strategy=strategy,
+        notification=notification,
+        customer_email=customer_email
     )

@@ -25,6 +25,11 @@ services:
   redis:
     image: "redis"
   celery:
+    environment:
+      - DB_HOST=db
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
     build: .
     command: celery -A app worker -l info
     volumes:

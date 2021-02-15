@@ -7,12 +7,12 @@ class Email(NotificationStrategy):
     def __init__(self, params):
         self.params = params
 
-    def send(self, user_unique_key: str) -> None:
+    def send(self, to: str) -> None:
         """Sends the email using the django core"""
 
         send_mail(
             self.params.get('subject'),
             self.params.get('body'),
             self.params.get('from'),
-            [user_unique_key],
+            [to],
         )

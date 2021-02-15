@@ -8,7 +8,7 @@ class NotificationContext():
     The Context defines the interface of interest to clients
     who need to use notifications
     """
-    def __init__(self, strategy: str, notification: str) -> None:
+    def __init__(self, strategy, notification):
         """
         The Context accepts the strategy and the notification
         in order to setup the concrete notification
@@ -24,5 +24,5 @@ class NotificationContext():
 
         self.strategy = strategy_(strategies_dict.get(strategy))
 
-    def send(self, user_unique_key) -> None:
-        self.strategy.send(user_unique_key)
+    def send(self, to):
+        self.strategy.send(to)
