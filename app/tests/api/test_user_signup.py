@@ -27,7 +27,6 @@ class ApiTests(TestCase):
                        CELERY_TASK_ALWAYS_EAGER=True,
                        BROKER_BACKEND='memory')
     def test_given_user_when_signup_post_then_created_ok(self):
-        
         res = self.send_post(SIGNUP_URL)
         user = ExtendedUser.objects.get(email='test@test.test')
 

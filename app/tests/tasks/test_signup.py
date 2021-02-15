@@ -1,12 +1,9 @@
 from django.test import TestCase
-from rest_framework import status
 from landbot.models import Notification, ExtendedUser
 from django.test.utils import override_settings
-from landbot.tasks.signup import signup_notification
-from unittest.mock import patch
-from tests.utils import create_and_validate_custom_user
 from django.core import mail
 from landbot.notifications.signup import STRATEGIES
+
 
 class SignupTask(TestCase):
 
@@ -26,7 +23,7 @@ class SignupTask(TestCase):
 
         user.set_unusable_password()
         user.clean_fields()
-  
+
         # Assert that notification db row has been updated properly
         notification = Notification.objects.get(customer_email=user.email)
         self.assertEquals(notification.sent, True)
