@@ -1,32 +1,26 @@
 from django.test import TestCase
-from tests.utils import (
-    create_and_validate_custom_user,
-    create_and_validate_custom_notification
-)
+from tests.utils import create_and_validate_custom_notification
 from django.db.utils import IntegrityError
 
 
 class NotificationTest(TestCase):
 
-    def test_given_right_notification_when_create_then_returns_right_info(self):
+    def test_given_right_notification_when_signup_then_returns_right_info(self):
         strategy = 'email'
-        user = create_and_validate_custom_user()
-        notification = create_and_validate_custom_notification(user=user)
+        notification = create_and_validate_custom_notification(customer_email='customer@test.test')
 
-        self.assertEqual(notification.notification, 'welcome_message')
+        self.assertEqual(notification.notification, 'signup')
         self.assertEqual(notification.strategy, strategy)
-        self.assertEqual(notification.user.email, user.email)
+        self.assertEqual(notification.customer_email, 'customer@test.test')
 
     def test_given_notification_not_provided_when_creating_then_validation_error(self):
         with self.assertRaises(IntegrityError):
-            user = create_and_validate_custom_user(email='without_notification@test.test')
-            create_and_validate_custom_notification(user=user, notification=None)
+            create_and_validate_custom_notification(customer_email='customer@test.test', notification=None)
 
     def test_given_strategy_not_provided_when_creating_then_validation_error(self):
         with self.assertRaises(IntegrityError):
-            user = create_and_validate_custom_user(email='without_strategy@test.test')
-            create_and_validate_custom_notification(user=user, strategy=None)
+            create_and_validate_custom_notification(customer_email='customer@test.test', strategy=None)
 
-    def test_given_user_not_provided_when_creating_then_validation_error(self):
+    def test_given_customer_email_not_provided_when_creating_then_validation_error(self):
         with self.assertRaises(IntegrityError):
-            create_and_validate_custom_notification(user=None)
+            create_and_validate_custom_notification(customer_email=None)
