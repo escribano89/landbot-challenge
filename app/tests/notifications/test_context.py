@@ -26,14 +26,28 @@ class ContextTest(TestCase):
         user = create_and_validate_custom_user(email='sales@test.test')
         context = NotificationContext(user=user, notification='sales')
         self.assertTrue(isinstance(context.strategy, Sales))
-        self.assertEqual(context.strategy.source,  settings.EMAIL_FROM)
-        self.assertEqual(context.strategy.to,  settings.EMAIL_SALES)
 
-    def test_given_context_when_sending_then_calls_strategy(self):
+    def test_given_signup_context_when_sending_then_calls_strategy(self):
         user = create_and_validate_custom_user(email='sending@test.test')
         context = NotificationContext(user=user, notification='signup')
 
         with mock.patch('landbot.notifications.signup.Signup.send', return_value=True) as mocked_handler:
+            context.strategy.send()
+            self.assertEquals(mocked_handler.call_count, 1)
+
+    def test_given_pricing_context_when_sending_then_calls_strategy(self):
+        user = create_and_validate_custom_user(email='sendingpricing@test.test')
+        context = NotificationContext(user=user, notification='pricing')
+
+        with mock.patch('landbot.notifications.pricing.Pricing.send', return_value=True) as mocked_handler:
+            context.strategy.send()
+            self.assertEquals(mocked_handler.call_count, 1)
+
+    def test_given_sales_context_when_sending_then_calls_strategy(self):
+        user = create_and_validate_custom_user(email='sendingsales@test.test')
+        context = NotificationContext(user=user, notification='sales')
+
+        with mock.patch('landbot.notifications.sales.Sales.send', return_value=True) as mocked_handler:
             context.strategy.send()
             self.assertEquals(mocked_handler.call_count, 1)
 
