@@ -17,6 +17,6 @@ class Sales():
         self.user = user
 
     def send(self):
-        message = "Request sales assistance by: {}".format(self.user.email)
+        message = "Requested sales assistance by: {}".format(self.user.email)
         payload = '{"text":"%s"}' % message
         requests.post(settings.SLACK_WEBHOOK, data=payload)
