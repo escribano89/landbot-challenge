@@ -44,7 +44,8 @@ The functionality has been covered with structured tests. We set up flake8 and G
 ## Last considerations
 
 - Review and expand the test suite.
-- We included a library to handle the phone validation. This could be replaced in case we need to.
+- Consider the use of API versioning.
+- We included a library to handle the phone validation. This could be replaced in case it doesn't fit correctly.
 - We send all the notifications in the background, without applying that required "minute". So in case that is 100% necessary, we should implement it.
 - In case of having code scalability issues, consider decoupling the business code from the infrastructure.
 - Improve the API returning HTTP codes to be more concise (eg: 422 instead of 400 or 409 instead of 400)
