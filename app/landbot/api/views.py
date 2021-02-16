@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from landbot.api.serializers import (
-    ExtendedUserSerializer, 
+    ExtendedUserSerializer,
     NotificationSerializer,
     AssistanceSerializer,
 )
@@ -35,6 +35,5 @@ class RequestAssistance(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_200_OK)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        

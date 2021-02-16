@@ -2,6 +2,7 @@ from rest_framework import serializers
 from landbot.models import ExtendedUser, Notification
 from landbot.notifications.mapping import TOPIC_CHANNELS_MAPPING
 
+
 class ExtendedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExtendedUser

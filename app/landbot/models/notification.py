@@ -1,6 +1,7 @@
 from django.db import models
 from landbot.models import ExtendedUser
 
+
 class Notification(models.Model):
     user = models.ForeignKey(
         ExtendedUser,

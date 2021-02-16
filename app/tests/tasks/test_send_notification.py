@@ -1,5 +1,5 @@
 from django.test import TestCase
-from landbot.models import Notification, ExtendedUser
+from landbot.models import Notification
 from django.test.utils import override_settings
 from django.core import mail
 from tests.utils import create_and_validate_custom_user

@@ -23,8 +23,8 @@ class ContextTest(TestCase):
     def test_given_context_with_unknown_notification_then_setup_fails(self):
         with self.assertRaises(Exception):
             user = create_and_validate_custom_user(email='fake-notification@test.test')
-            context = NotificationContext(user=user, notification='whatsapp-fake')
+            NotificationContext(user=user, notification='whatsapp-fake')
 
     def test_given_context_with_signuo_notification_and_no_user_then_setup_fails(self):
         with self.assertRaises(Exception):
-            context = NotificationContext(user=None, notification='whatsapp-fake')
+            NotificationContext(user=None, notification='whatsapp-fake')
