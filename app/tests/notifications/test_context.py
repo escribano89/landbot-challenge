@@ -1,16 +1,33 @@
 from django.test import TestCase
 from landbot.notifications.context import NotificationContext
 from landbot.notifications.signup import Signup
+from landbot.notifications.sales import Sales
+from landbot.notifications.pricing import Pricing
 from unittest import mock
 from tests.utils import create_and_validate_custom_user
+from django.conf import settings
 
 
 class ContextTest(TestCase):
-    def test_given_context_when_right_params_then_setup_correctly(self):
+    def test_given_signup_context_when_right_params_then_setup_correctly(self):
         user = create_and_validate_custom_user(email='right@test.test')
         context = NotificationContext(user=user, notification='signup')
         self.assertTrue(isinstance(context.strategy, Signup))
         self.assertEqual(context.strategy.to, 'right@test.test')
+
+    def test_given_pricing_when_right_params_then_setup_correctly(self):
+        user = create_and_validate_custom_user(email='pricing@test.test')
+        context = NotificationContext(user=user, notification='pricing')
+        self.assertTrue(isinstance(context.strategy, Pricing))
+        self.assertEqual(context.strategy.source, settings.EMAIL_FROM)
+        self.assertEqual(context.strategy.to, settings.EMAIL_PRICING)
+
+    def test_given_sales_when_right_params_then_setup_correctly(self):
+        user = create_and_validate_custom_user(email='sales@test.test')
+        context = NotificationContext(user=user, notification='sales')
+        self.assertTrue(isinstance(context.strategy, Sales))
+        self.assertEqual(context.strategy.source,  settings.EMAIL_FROM)
+        self.assertEqual(context.strategy.to,  settings.EMAIL_SALES)
 
     def test_given_context_when_sending_then_calls_strategy(self):
         user = create_and_validate_custom_user(email='sending@test.test')

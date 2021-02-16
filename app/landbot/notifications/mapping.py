@@ -1,4 +1,4 @@
 TOPIC_CHANNELS_MAPPING = {
-    'sales': 'signup',
-    'pricing': 'signup'
+    'sales': 'sales',
+    'pricing': 'pricing'
 }
