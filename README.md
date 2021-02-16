@@ -39,7 +39,7 @@ In order to give the desired functionality to the chatbot, we have implemented a
 
 The notifications have been developed to allow the addition of new topics and channels in an easy way, just including the new one in our mapping and implementing the concrete notification (covering it with the corresponding test).
 
-The functionality has been covered with structured tests. We set up flake8 and Github actions to keep the code clean and green in every Pull Request. We have left some specific settings in the Django settings file, just to ease the testing process, but it must not be included in a realistic repository.
+The functionality has been covered with structured tests. We set up flake8 and Github actions to keep the code clean and green in every Pull Request. We have left some specific settings in the Django settings file, just to ease the testing process, but it must not be included in a realistic repository (eg: mailtrap settings, slack webhook...). I didn't include information on each PR due to the purpose of the challenge.
 
 ## Last considerations
 
