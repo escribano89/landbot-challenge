@@ -43,7 +43,7 @@ The functionality has been covered with structured tests. We set up flake8 and G
 
 ## Last considerations
 
-- Review and expand the test suite
+- Review and expand the test suite.
 - We included a library to handle the phone validation. This could be replaced in case we need to.
 - We send all the notifications in the background, without applying that required "minute". So in case that is 100% necessary, we should implement it.
 - In case of having code scalability issues, consider decoupling the business code from the infrastructure.
