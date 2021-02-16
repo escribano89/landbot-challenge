@@ -30,12 +30,12 @@ class ApiAssistanceTest(TestCase):
         # Clean up the notifications table
         Notification.objects.all().delete()
 
-        create_and_validate_custom_user(email='assistance-sales@test.test')
-        res = self.send_post(ASSISTANCE_URL, email='test@test.com', topic='sales')
+        user = create_and_validate_custom_user(email='assistance-sales@test.test')
+        res = self.send_post(ASSISTANCE_URL, email='assistance-sales@test.test', topic='sales')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
         # Assert that notification db row has been updated properly
-        notification = Notification.objects.get(email='assistance-sales@test.test')
+        notification = Notification.objects.get(id=user.id)
         self.assertEquals(notification.sent, True)
 
     @override_settings(CELERY_TASK_EAGER_PROPAGATES=True,
