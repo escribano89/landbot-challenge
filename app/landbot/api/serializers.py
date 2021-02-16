@@ -16,11 +16,17 @@ class AssistanceSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
 
     def validate_topic(self, data):
+        """
+            Validates that the topics is configured in our mapping
+        """
         if data.lower() not in TOPIC_CHANNELS_MAPPING.keys():
             raise serializers.ValidationError("Provided topic is not valid")
         return data
 
     def validate_email(self, data):
+        """
+            Validates that the email is already registered
+        """
         if not ExtendedUser.objects.filter(email=data.lower()).exists():
             raise serializers.ValidationError("Provided email is not registered")
         return data

@@ -5,6 +5,10 @@ import requests
 class Sales():
 
     def __init__(self, user):
+        """
+            Sales notification using slack. Includes
+            the user who requested assistance
+        """
         # User is mandatory for the sales notification
         if not user:
             raise(Exception)

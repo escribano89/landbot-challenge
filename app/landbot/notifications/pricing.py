@@ -4,6 +4,10 @@ from landbot.notifications.strategies.email import send_email_wrapper
 
 class Pricing():
     def __init__(self, user):
+        """
+            Pricing notification using email. Includes
+            the user who requested assistance
+        """
         # User is mandatory for the pricing notification
         if not user:
             raise(Exception)

@@ -4,6 +4,10 @@ from landbot.notifications.strategies.email import send_email_wrapper
 
 class Signup():
     def __init__(self, user):
+        """
+            Signup notification using email. It is sent
+            directly to the customer.
+        """
         # User is mandatory for the sign up notification
         if not user:
             raise(Exception)
