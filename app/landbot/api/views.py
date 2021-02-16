@@ -5,7 +5,6 @@ from landbot.api.serializers import (
     NotificationSerializer,
     AssistanceSerializer,
 )
-from landbot.notifications.mapping import TOPIC_CHANNELS_MAPPING
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -29,7 +28,7 @@ class RequestAssistance(APIView):
         """
         user = ExtendedUser.objects.filter(email=data['email']).first()
         notification_dict = {
-            'notification': TOPIC_CHANNELS_MAPPING.get(data['topic']),
+            'notification': data['topic'],
             'user': user.id
         }
         serializer = NotificationSerializer(

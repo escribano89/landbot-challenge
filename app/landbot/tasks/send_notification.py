@@ -12,6 +12,6 @@ def send_notification(notification_id):
     # Use the context to setup the strategy
     # and then send the notification
     context = NotificationContext(notification.user, notification.notification)
-    context.strategy.send()
+    context.send()
     # Update the sent flag
     Notification.objects.filter(id=notification_id).update(sent=True)
