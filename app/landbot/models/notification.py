@@ -12,8 +12,6 @@ class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    REQUIRED_FIELDS = ['notification']
-
     def __str__(self):
         return 'Notification to {} through {}'.format(
             self.user.email, self.strategy
