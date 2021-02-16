@@ -4,12 +4,12 @@ from landbot.api.views import CreateUserAPIView, RequestAssistance
 
 urlpatterns = [
     path(
-        'user/create/',
+        'users/',
         CreateUserAPIView.as_view(),
         name='create-user'
     ),
     path(
-        'user/assistance/',
+        'users/assistance/',
         RequestAssistance.as_view(),
         name='user-assistance'
     )
