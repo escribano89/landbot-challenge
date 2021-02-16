@@ -1,4 +1,4 @@
-# Map between the topic and 
+# Map between the topic and
 # the lowercase notification
 TOPIC_CHANNELS_MAPPING = {
     'sales': 'sales',
