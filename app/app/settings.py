@@ -149,4 +149,4 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_IMPORTS = ("landbot.tasks.send_notification")
 
 # Slack webhook
-SLACK_WEBHOOK='https://hooks.slack.com/services/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'
+SLACK_WEBHOOK = 'https://hooks.slack.com/services/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'

@@ -39,6 +39,7 @@ class ApiAssistanceTest(TestCase):
             # Assert that notification db row has been updated properly
             notification = Notification.objects.get(id=user.id)
             self.assertEquals(notification.sent, True)
+            self.assertEquals(mocked_handler.call_count, 1)
 
     @override_settings(CELERY_TASK_EAGER_PROPAGATES=True,
                        CELERY_TASK_ALWAYS_EAGER=True,
