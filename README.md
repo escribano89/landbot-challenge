@@ -35,7 +35,7 @@ flake8
 
 The chat created using Landbot can be found here: https://chats.landbot.io/v3/H-828120-H1FT7FXKH6JDFW2Q/index.html
 
-In order to give the desired functionality to the chatbot, we have implemented an API using Django, DRF, and Celery for the async tasks. (Further information about the API). All the notifications (email, slack) have been considered as async tasks, so they are managed by celery without blocking the main execution. To apply this decoupling we have used Django Signals to trigger the notification after some event (eg: user signup or assistance request). Celery takes care of these tasks using Redis as a broker. A Notification table has been included to prepare and build the notifications and check their current status.
+In order to give the desired functionality to the chatbot, we have implemented an API using Django, DRF, and Celery for the async tasks. (Further information about the API [here](https://github.com/escribano89/landbot-challenge/blob/master/docs/api.md)). All the notifications (email, slack) have been considered as async tasks, so they are managed by celery without blocking the main execution. To apply this decoupling we have used Django Signals to trigger the notification after some event (eg: user signup or assistance request). Celery takes care of these tasks using Redis as a broker. A Notification table has been included to prepare and build the notifications and check their current status.
 
 The notifications have been developed to allow the addition of new topics and channels in an easy way, just including the new one in our mapping and implementing the concrete notification (covering it with the corresponding test).
 
@@ -51,4 +51,9 @@ The functionality has been covered with structured tests. We set up flake8 and G
 - Improve the API returning HTTP codes to be more concise (eg: 422 instead of 400 or 409 instead of 400)
 - Now the chatbot only supports one iteration. If a user is already registered it returns a 400 bad request response. We could adapt it to the business requirements.
 
+## Screenshots
+
+![Slack](https://github.com/escribano89/landbot-challenge/blob/master/img/slack.PNG)
+![Bot](https://github.com/escribano89/landbot-challenge/blob/master/img/final_bot.PNG)
+![Signup](https://github.com/escribano89/landbot-challenge/blob/master/img/welcome.PNG)
 
