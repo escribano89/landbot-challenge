@@ -24,6 +24,9 @@ class RequestAssistance(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def save_notification(self, data):
+        """
+            Creates a notification using the provided topic
+        """
         user = ExtendedUser.objects.filter(email=data['email']).first()
         notification_dict = {
             'notification': TOPIC_CHANNELS_MAPPING.get(data['topic']),
