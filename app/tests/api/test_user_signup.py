@@ -8,7 +8,7 @@ from django.test.utils import override_settings
 SIGNUP_URL = reverse('create-user')
 
 
-class ApiTests(TestCase):
+class ApiSignupTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
