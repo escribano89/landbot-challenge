@@ -1,7 +1,7 @@
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
-from landbot.models import ExtendedUser, Notification
+from landbot.models import Notification
 from django.urls import reverse
 from django.test.utils import override_settings
 from tests.utils import create_and_validate_custom_user
@@ -30,7 +30,7 @@ class ApiAssistanceTest(TestCase):
         # Clean up the notifications table
         Notification.objects.all().delete()
 
-        user = create_and_validate_custom_user(email='assistance-sales@test.test')
+        create_and_validate_custom_user(email='assistance-sales@test.test')
         res = self.send_post(ASSISTANCE_URL, email='test@test.com', topic='sales')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
@@ -41,7 +41,7 @@ class ApiAssistanceTest(TestCase):
     @override_settings(CELERY_TASK_EAGER_PROPAGATES=True,
                        CELERY_TASK_ALWAYS_EAGER=True,
                        BROKER_BACKEND='memory')
-    def test_given_assistance_request_when_email_and_topic_sales_are_correct_then_ok_response(self):
+    def test_given_assistance_request_when_email_and_topic_pricing_are_correct_then_ok_response(self):
         # Clean up the notifications table
         Notification.objects.all().delete()
 
@@ -54,7 +54,7 @@ class ApiAssistanceTest(TestCase):
         self.assertEquals(notification.sent, True)
 
     def test_given_assistance_request_when_invalid_topic_then_bad_request(self):
-        user = create_and_validate_custom_user(email='invalidtopic@test.test')
+        create_and_validate_custom_user(email='invalidtopic@test.test')
         res = self.send_post(ASSISTANCE_URL, email='invalidtopic@test.test', topic='fake')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -63,7 +63,7 @@ class ApiAssistanceTest(TestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_given_assistance_request_when_empty_topic_then_bad_request(self):
-        user = create_and_validate_custom_user(email='emptytopic@test.test')
+        create_and_validate_custom_user(email='emptytopic@test.test')
         res = self.send_post(ASSISTANCE_URL, email='emptytopic@test.test', topic='')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
