@@ -5,6 +5,7 @@ from landbot.models import Notification
 from django.urls import reverse
 from django.test.utils import override_settings
 from tests.utils import create_and_validate_custom_user
+from unittest import mock
 
 ASSISTANCE_URL = reverse('user-assistance')
 
@@ -27,16 +28,17 @@ class ApiAssistanceTest(TestCase):
                        CELERY_TASK_ALWAYS_EAGER=True,
                        BROKER_BACKEND='memory')
     def test_given_assistance_request_when_email_and_topic_sales_are_correct_then_ok_response(self):
-        # Clean up the notifications table
-        Notification.objects.all().delete()
+        with mock.patch('landbot.notifications.sales.Sales.send', return_value=True) as mocked_handler:
+            # Clean up the notifications table
+            Notification.objects.all().delete()
 
-        user = create_and_validate_custom_user(email='assistance-sales@test.test')
-        res = self.send_post(ASSISTANCE_URL, email='assistance-sales@test.test', topic='sales')
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
+            user = create_and_validate_custom_user(email='assistance-sales@test.test')
+            res = self.send_post(ASSISTANCE_URL, email='assistance-sales@test.test', topic='sales')
+            self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-        # Assert that notification db row has been updated properly
-        notification = Notification.objects.get(id=user.id)
-        self.assertEquals(notification.sent, True)
+            # Assert that notification db row has been updated properly
+            notification = Notification.objects.get(id=user.id)
+            self.assertEquals(notification.sent, True)
 
     @override_settings(CELERY_TASK_EAGER_PROPAGATES=True,
                        CELERY_TASK_ALWAYS_EAGER=True,

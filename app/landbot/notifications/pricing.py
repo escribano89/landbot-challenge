@@ -4,7 +4,7 @@ from landbot.notifications.strategies.email import send_email_wrapper
 
 class Pricing():
     def __init__(self, user):
-        # User is mandatory for the sign up notification
+        # User is mandatory for the pricing notification
         if not user:
             raise(Exception)
 
