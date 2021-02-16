@@ -21,12 +21,11 @@ def create_and_validate_custom_user(
 
 @factory.django.mute_signals(signals.post_save)
 def create_and_validate_custom_notification(
-    notification='signup', strategy='email', customer_email='customer@test.test'
+    notification='signup', user=None
 ):
     notification = Notification.objects.create(
         notification=notification,
-        strategy=strategy,
-        customer_email=customer_email,
+        user=user,
     )
 
     notification.clean_fields()

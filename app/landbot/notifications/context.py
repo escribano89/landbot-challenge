@@ -1,28 +1,20 @@
 from importlib import import_module
 
-STRATEGIES_MODULE = 'landbot.notifications.strategies'
-
 
 class NotificationContext():
     """
     The Context defines the interface of interest to clients
     who need to use notifications
     """
-    def __init__(self, strategy, notification):
+    def __init__(self, user, notification):
         """
-        The Context accepts the strategy and the notification
+        The Context accepts the notification
         in order to setup the concrete notification
         """
-        # We look for the available strategies for the
-        # provided notification
-        strategies_available = import_module('landbot.notifications.{}'.format(notification.lower()))
-        strategies_dict = getattr(strategies_available, 'STRATEGIES')
+        # We import the provided notification
+        notification_module = import_module('landbot.notifications.{}'.format(notification.lower()))
+        strategy_ = getattr(notification_module, notification.capitalize())
+        self.strategy = strategy_(user)
 
-        # We get the selected strategy class
-        module = import_module('{}.{}'.format(STRATEGIES_MODULE, strategy))
-        strategy_ = getattr(module, strategy.capitalize())
-
-        self.strategy = strategy_(strategies_dict.get(strategy))
-
-    def send(self, to):
-        self.strategy.send(to)
+    def send(self):
+        self.strategy.send()

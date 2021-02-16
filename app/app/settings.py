@@ -134,7 +134,11 @@ EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = '4bb6cdc8491735'
 EMAIL_HOST_PASSWORD = 'cf908fa82163b1'
 EMAIL_PORT = '2525'
-EMAIL_FROM = 'escribano101@gmail.com'
+EMAIL_FROM = 'landbot@gmail.com'
+
+# Notification emails
+EMAIL_SALES = 'sales@gmail.com'
+EMAIL_PRICING = 'pricing@gmail.com'
 
 # Celery settings
 CELERY_BROKER_URL = 'redis://redis:6379'
