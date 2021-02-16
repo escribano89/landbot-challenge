@@ -1,4 +1,4 @@
 TOPIC_CHANNELS_MAPPING = {
-    'sales': 'slack',
-    'pricing': 'email'
+    'sales': 'signup',
+    'pricing': 'signup'
 }
